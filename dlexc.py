@@ -46,65 +46,50 @@ class DoublyLinkedList:
 
     def prepend(self, value):
         new_node = Node(value)
-        if self.head is None:
+        if self.length == 0:
             self.head = new_node
             self.tail = new_node
         else:
-            self.head.prev = new_node
             new_node.next = self.head
+            self.head.prev = new_node
             self.head = new_node
         self.length += 1
         return True
 
+    def pop_first(self):
+        if self.length == 0:
+            return None
+        temp = self.head
+        if self.length == 1:
+            self.head = None
+            self.tail = None 
+        else:       
+            self.head = self.head.next
+            self.head.prev = None
+            temp.next = None
+        self.length -= 1
+        return temp
+
+
 
 my_doubly_linked_list = DoublyLinkedList(2)
-my_doubly_linked_list.append(3)
-
-print('Before prepend():')
-print('----------------')
-print('Head:', my_doubly_linked_list.head.value)
-print('Tail:', my_doubly_linked_list.tail.value)
-print('Length:', my_doubly_linked_list.length, '\n')
-print('Doubly Linked List:')
-my_doubly_linked_list.print_list()
+my_doubly_linked_list.append(1)
 
 
-my_doubly_linked_list.prepend(1)
-
-
-print('\n\nAfter prepend():')
-print('---------------')
-print('Head:', my_doubly_linked_list.head.value)
-print('Tail:', my_doubly_linked_list.tail.value)
-print('Length:', my_doubly_linked_list.length, '\n')
-print('Doubly Linked List:')
-my_doubly_linked_list.print_list()
+# (2) Items - Returns 2 Node
+print(my_doubly_linked_list.pop_first().value)
+# (1) Item -  Returns 1 Node
+print(my_doubly_linked_list.pop_first().value)
+# (0) Items - Returns None
+print(my_doubly_linked_list.pop_first())
 
 
 
 """
     EXPECTED OUTPUT:
-    
-    Before prepend():
     ----------------
-    Head: 2
-    Tail: 3
-    Length: 2 
-
-    Doubly Linked List:
     2
-    3
-
-
-    After prepend():
-    ---------------
-    Head: 1
-    Tail: 3
-    Length: 3 
-
-    Doubly Linked List:
     1
-    2
-    3
+    None
 
 """
